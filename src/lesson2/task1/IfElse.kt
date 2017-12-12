@@ -33,7 +33,17 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    val a = age%10
+    return when {
+        age == 1 -> "$age год"
+        age == 2 -> "$age года"
+        age in 11..19  -> "$age лет"
+        a == 1 && age != 11 && age != 111-> "$age год"
+        a == 2 -> "$age года"
+        else -> "$age лет"
+    }
+}
 
 /**
  * Простая
@@ -44,7 +54,18 @@ fun ageDescription(age: Int): String = TODO()
  */
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
-                   t3: Double, v3: Double): Double = TODO()
+                   t3: Double, v3: Double): Double {
+    val a = t1 * v1
+    val b = t2 * v2
+    val c = t3 * v3
+    val s = (a + b + c)/2
+    return when {
+        s < a -> s/v1
+        s in a..a+b -> (s - a)/v2 + t1
+        s in a+b..a+b+c -> (s - (a + b))/v3 + (t1 + t2)
+        else -> throw IllegalArgumentException("Время не существует")
+    }
+}
 
 /**
  * Простая
@@ -57,7 +78,18 @@ fun timeForHalfWay(t1: Double, v1: Double,
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int = TODO()
+                       rookX2: Int, rookY2: Int): Int {
+    return when {
+        kingX == rookX1 && kingY != rookY2 -> 1
+        kingY == rookY1 && kingX != rookX2 -> 1
+        kingX == rookX2 && kingY != rookY1 -> 2
+        kingY == rookY2 && kingX != rookX1 -> 2
+        kingX == rookX1 && kingY == rookY2 -> 3
+        kingX == rookX2 && kingY == rookY1 -> 3
+        kingX != rookX1 && kingX != rookX2 && kingY != rookY1 && kingY != rookY2 -> 0
+        else -> throw IllegalArgumentException("Место не существует")
+    }
+}
 
 /**
  * Простая
@@ -69,9 +101,20 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  * и 3, если угроза есть и от ладьи и от слона.
  * Считать, что ладья и слон не могут загораживать друг друга.
  */
+fun sqr(x: Int) = x * x
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int = TODO()
+                          bishopX: Int, bishopY: Int): Int {
+    val x = sqr (bishopX - kingX)
+    val y = sqr (bishopY - kingY)
+    return when {
+        (kingX == rookX || kingY == rookY) && x != y  -> 1
+        x == y && kingX != rookX && kingY != rookY    -> 2
+        x == y && (kingX == rookX || kingY == rookY ) -> 3
+        x != y && kingX != rookX && kingY != rookY  -> 0
+        else -> throw IllegalArgumentException("Место не существует")
+    }
+}
 
 /**
  * Простая
@@ -81,7 +124,18 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun sqr(x: Double ) = x * x
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val cosA = (sqr(b)+sqr(c)-sqr(a))/(2*b*c)
+    val cosB = (sqr(a)+sqr(c)-sqr(b))/(2*a*c)
+    val cosC = (sqr(a)+sqr(b)-sqr(c))/(2*a*b)
+    return when {
+        (cosA>0&&cosB>0&&cosC>0)&&(a+b>c&&a+c>b&&b+c>a)          -> 0
+        (cosA==0.0||cosB==0.0||cosC==0.0)&&(a+b>c&&a+c>b&&b+c>a) -> 1
+        (cosA<0||cosB<0||cosC<0)&&(a+b>c&&a+c>b&&b+c>a)          -> 2
+        else                                                     -> -1
+    }
+}
 
 /**
  * Средняя
@@ -91,4 +145,16 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    var l1 = b - c
+    var l2 = d - c
+    var l3 = d - a
+    var l4 = b - a
+    return when {
+        a <= c && b <= d && c <= b -> l1
+        a <= c && d <= b && c <= d -> l2
+        c <= a && d <= b && a <= d -> l3
+        c <= a && b <= d && a <= b -> l4
+        else -> -1
+    }
+}

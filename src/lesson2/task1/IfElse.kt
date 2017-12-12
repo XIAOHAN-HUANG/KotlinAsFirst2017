@@ -146,10 +146,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    var l1 = b - c
-    var l2 = d - c
-    var l3 = d - a
-    var l4 = b - a
+    val l1 = b - c
+    val l2 = d - c
+    val l3 = d - a
+    val l4 = b - a
     return when {
         a <= c && b <= d && c <= b -> l1
         a <= c && d <= b && c <= d -> l2

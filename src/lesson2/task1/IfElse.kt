@@ -78,18 +78,16 @@ fun timeForHalfWay(t1: Double, v1: Double,
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int {
-    return when {
-        kingX == rookX1 && kingY != rookY2 -> 1
-        kingY == rookY1 && kingX != rookX2 -> 1
-        kingX == rookX2 && kingY != rookY1 -> 2
-        kingY == rookY2 && kingX != rookX1 -> 2
-        kingX == rookX1 && kingY == rookY2 -> 3
-        kingX == rookX2 && kingY == rookY1 -> 3
-        kingX != rookX1 && kingX != rookX2 && kingY != rookY1 && kingY != rookY2 -> 0
-        else -> throw IllegalArgumentException("Место не существует")
-    }
-}
+                       rookX2: Int, rookY2: Int): Int = when {
+                           kingX == rookX1 && kingY != rookY2 -> 1
+                           kingY == rookY1 && kingX != rookX2 -> 1
+                           kingX == rookX2 && kingY != rookY1 -> 2
+                           kingY == rookY2 && kingX != rookX1 -> 2
+                           kingX == rookX1 && kingY == rookY2 -> 3
+                           kingX == rookX2 && kingY == rookY1 -> 3
+                           kingX != rookX1 && kingX != rookX2 && kingY != rookY1 && kingY != rookY2 -> 0
+                           else -> throw IllegalArgumentException("Место не существует")
+                       }
 
 /**
  * Простая
